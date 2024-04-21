@@ -1,2 +1,2 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<h1>Bienvenue sur cette app très basique !</h1>
+<p><a href="/auth/form/login">Ce lien</a> permet de créer un compte et se login</p>

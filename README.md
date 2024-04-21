@@ -1,38 +1,52 @@
-# create-svelte
+# Que contient ce projet ?
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+Ce projet contient tout l'essentiel pour créer une appli fullstack avec login, avec Node, Express, Mongoose et Svelte.
+Il permet de créer des utilisateurs, de se connecter, de se déconnecter, en assurant la validation des données, et en laissant une grande marge de manoeuvre pour contrôler la mise en page des formulaires définis dans src/lib/styles/form.css.
 
-## Creating a project
+Les users peuvent être pending (en attente de validation), user ou admin.
 
-If you're seeing this, you've probably already done this step. Congrats!
+Tout ce qui concerne l'authentification et la gestion des users se trouve dans src/routes/auth. Le reste de l'appli donc ne devrait pas utiliser auth.
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+Dans le détail des fonctionnalités :
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+Login : 
+- redirige vers user/username si déjà logged in.
+- message d'erreur personnalisé si on se trompe de mail, username ou mot de passe
+- la page user prend en req.param le nom du user et si on essaie d'y accéder en étant quelqu'un d'autre, on est reconduit à sa propre page, ou à la page de login si on est logged out.
+- Met en place un cookie sessionID qui grâce à des requêtes fetch assurées en layout dans form et dans routes donne accès aux infos sur l'utilisateur à n'importe quelle page
 
-## Developing
+Register : 
+- Vérifie que l'username et le mail n'existent pas déjà
+- vérifie que l'adresse mail en est à priori une
+- Vérifie que le mot de passe contienne entre 7 et 14 caractères
+- Vérifie que les deux mots de passe soient identiques
+- Met en place un message d'erreur qui s'enlève dès qu'on recommence à écrire si l'erreur a lieu lors du submit
+- Envoie un mail avec lien de confirmation (avant que ce lien soit cliqué, le statut est pending au lieu de user)
+- La page de confirmation permet de se rediriger vers l'accueil
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Forgotten password :
+- permet d'envoyer une adresse mail, et rappelle à quelle adresse le mail a été envoyé
+- Donne un formulaire où il faut remplir 2 fois le mot de passe avec la même vérification qu'au register
+- Quand le mot de passe est changé, on est instantanément logged in.
 
-```bash
-npm run dev
+Account username :
+- A juste un bouton logout
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+Lors de la navigation :
+- Si user connecté, on rafraîchit le cookie dont la durée de vie est précisée en config_front dans lib.
 
-## Building
+# Commandes :
 
-To create a production version of your app:
+/src/server :
+npm install
+npm install mongoose express nodemailer cors dotenv
 
-```bash
-npm run build
-```
+/src :
+npm install
+npm install concurrently
 
-You can preview the production build with `npm run preview`.
+# A mettre en place :
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+/src/server : 
+Créer un fichier .env et rentrer les informations qui sont utilisées par config_back.js avec process.env
+

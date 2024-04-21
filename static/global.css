@@ -1,0 +1,14 @@
+@font-face {
+    font-family: Quicksand;
+    src: url('./fonts/Quicksand-Regular.ttf') format('truetype');
+}
+
+html,body{
+    width: 100%;
+    margin : 0;
+}
+
+body{
+    font-family: Quicksand;
+    font-size: 100%;
+}
