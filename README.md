@@ -9,7 +9,7 @@ Tout ce qui concerne l'authentification et la gestion des users se trouve dans s
 
 Dans le détail des fonctionnalités :
 
-Login : 
+## Login : 
 - redirige vers user/username si déjà logged in.
 - message d'erreur personnalisé si on se trompe de mail, username ou mot de passe
 - la page user prend en req.param le nom du user et si on essaie d'y accéder en étant quelqu'un d'autre, on est reconduit à sa propre page, ou à la page de login si on est logged out.
